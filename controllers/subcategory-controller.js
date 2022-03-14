@@ -30,9 +30,15 @@ module.exports.processCreateSubCategory = async (req, res, next) => {
             return subcategoryHelpers.createSubCategory(data)
         }
     }).then(() => {
-        res.redirect('/category');
+        res.redirect('/subcategory/create');
     }).catch(error => {
         console.log(error);
     })
 
+}
+module.exports.loadSubs = (req, res, next) => {
+    let data = req.body.value
+    subcategoryHelpers.getSubCats(data).then((response) => {
+        res.json(response);
+    })
 }

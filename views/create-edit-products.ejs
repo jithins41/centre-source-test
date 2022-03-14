@@ -8,14 +8,28 @@
           <% if (error) { %>
           <span class="text-danger"><%= error %> </span>
           <% } %>
+          <% if (success) { %>
+          <span class="text-success"><%= success %> </span>
+          <% } %>
           <form action="<%= action %>" method="post">
             <div class="form-group my-3">
               <label for="name">Name</label>
-              <input type="text" name="name" id="name" class="form-control">
+              <input required type="text" name="name" id="name" class="form-control">
             </div>
             <div class="form-group my-3">
               <label for="parentcat">Category</label>
-                
+              <select onchange="loadSubCategory(event)" required style="text-transform: capitalize;" name="parentcat" id="parentcat" class="form-select">
+                <option value="">Select</option>
+                <% categories.forEach(element => { %>
+                <option value="<%= element.catid %>"><%= element.name %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group my-3">
+              <label for="subcategory">Sub Category</label>
+              <select required style="text-transform: capitalize;" name="subcategory" id="subcategory" class="form-select">
+                <option value="">Select</option>
+              </select>
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>
           </form>

@@ -1,6 +1,6 @@
 const { select, update, insert } = require('../config/connection');
 const { CATEGORY_TABLE } = require('../config/constants');
-
+const Promise = require('Promise');
 module.exports = {
     getCategories: () => {
         return new Promise((resolve, reject) => {
@@ -58,6 +58,31 @@ module.exports = {
                 else {
                     resolve(category[0].name);
                 }
+            }).catch(error => {
+                reject(error);
+            })
+        })
+    },
+    getCategoryDetails: (id) => {
+        return new Promise((resolve, reject) => {
+            let qry = `SELECT * from ${CATEGORY_TABLE} where catid=${id}`;
+            select(qry).then((catdetails) => {
+                if (catdetails.length > 0) {
+                    resolve(catdetails[0]);
+                }
+                else {
+                    resolve({});
+                }
+            }).catch(error => {
+                reject(error);
+            })
+        })
+    },
+    updateCategoryName: (id, name) => {
+        return new Promise((resolve, reject) => {
+            let qry = `UPDATE categories SET name=? where catid=?`;
+            update(qry, [name, id]).then(() => {
+                resolve()
             }).catch(error => {
                 reject(error);
             })

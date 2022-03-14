@@ -1,3 +1,4 @@
+const { Router } = require("express");
 const categoryHelpers = require("../helpers/category-helpers")
 
 module.exports.loadCategories = async (req, res, next) => {
@@ -9,7 +10,7 @@ module.exports.loadCategories = async (req, res, next) => {
 module.exports.loadCreateCategory = async (req, res, next) => {
     let error = req.session?.errorSession;
     req.session.errorSession = null;
-    res.render('create-edit-category', { action: '/category/create', title: 'Create Category', error });
+    res.render('create-edit-category', { category: {}, action: '/category/create', title: 'Create Category', error });
 }
 module.exports.processCreateCategory = async (req, res, next) => {
 
@@ -23,9 +24,37 @@ module.exports.processCreateCategory = async (req, res, next) => {
             return categoryHelpers.createCategory(data)
         }
     }).then(() => {
-        res.redirect('/category');
+        res.redirect('/category/create');
     }).catch(error => {
         console.log(error);
     })
 
+}
+module.exports.loadModifyCategory = async (req, res, next) => {
+    let id = req.params.id;
+    let error = req.session?.errorSession;
+    req.session.errorSession = null;
+    let data = await categoryHelpers.getCategoryDetails(id);
+    if (data?.catid == undefined) { res.redirect('/category/create') }
+    else {
+        req.session.catid = id;
+        res.render('create-edit-category', { action: '/category/modify', category: data, title: 'Create Category', error });
+    }
+
+}
+module.exports.processModifyCategory = (req, res, next) => {
+    let catid = req.session.catid;
+    req.session.catid = null;
+    categoryHelpers.checkNameDuplication(req.body.name).then((isTrue) => {
+        if (isTrue) {
+            req.session.errorSession = `Category ${req.body.name} already exist`;
+            res.redirect(`/category/modify/${catid}`);
+        }
+        else{
+            return categoryHelpers.updateCategoryName(catid, req.body.name)
+        }
+    })
+    .then(() => {
+        res.redirect('/category');
+    })
 }

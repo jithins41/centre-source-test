@@ -17,6 +17,7 @@
             <td><%= element.catid %></td>
             <td><%= element.name %></td>
             <td><a href="/subcategory?category=<%= element.name %>">View subcategories</a></td>
+            <td><a href="/category/modify/<%= element.catid %>">Edit</a></td>
           </tr>
           <% }) %>
         </tbody>

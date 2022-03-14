@@ -34,5 +34,13 @@ module.exports = {
                 reject(error);
             })
         })
+    },
+    getSubCats: (catid) => {
+        return new Promise((resolve, reject) => {
+            let qry = `SELECT * FROM ${SUBCATEGORY_TABLE} WHERE parentcat=${catid}`;
+            select(qry).then((response) => {
+                resolve(response);
+            })
+        })
     }
 }
