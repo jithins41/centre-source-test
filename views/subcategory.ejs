@@ -1,8 +1,8 @@
-<% include header %> 
+<% include header %>
 <div class="container mt-3">
   <div class="card">
     <div class="card-body">
-      <a class="btn btn-primary" href="/category/create">Create</a>
+      <a class="btn btn-primary" href="/products/create">Create</a>
       <table class="table mt-3 table-bordered">
         <thead>
           <tr>
@@ -12,11 +12,11 @@
           </tr>
         </thead>
         <tbody>
-          <% categories.forEach(element => { %>
+          <% subcategories.forEach(element => { %>
           <tr>
-            <td><%= element.catid %></td>
-            <td><%= element.name %></td>
-            <td><a href="/subcategory?category=<%= element.name %>">View subcategories</a></td>
+            <td><%= element.subcatid %></td>
+            <td><%= element.subcatname %></td>
+            <td><a href="/products?category=<%= element.category %>&subcategory=<%= element.subcatname %>">View Products</a></td>
           </tr>
           <% }) %>
         </tbody>
@@ -24,4 +24,4 @@
     </div>
   </div>
 </div>
-<% include footer %> 
+<% include footer %>

@@ -1,4 +1,5 @@
-const { select, update, insert } = require('../config/connection')
+const { select, update, insert } = require('../config/connection');
+const { CATEGORY_TABLE } = require('../config/constants');
 
 module.exports = {
     getCategories: () => {
@@ -31,5 +32,36 @@ module.exports = {
                 reject(error);
             })
         })
+    },
+    getCategoryName: (id) => {
+        return new Promise((resolve, reject) => {
+            let qry = `SELECT name from ${CATEGORY_TABLE} WHERE catid=${id}`;
+            insert(qry).then((category) => {
+                if (category.length < 0) {
+                    resolve(false)
+                }
+                else {
+                    resolve(category[0].name);
+                }
+            }).catch(error => {
+                reject(error);
+            })
+        })
+    },
+    getCategoryId: (name) => {
+        return new Promise((resolve, reject) => {
+            let qry = `SELECT catid from ${CATEGORY_TABLE} WHERE name='${name}'`;
+            insert(qry).then((category) => {
+                if (category.length < 0) {
+                    resolve(false)
+                }
+                else {
+                    resolve(category[0].name);
+                }
+            }).catch(error => {
+                reject(error);
+            })
+        })
     }
 }
+

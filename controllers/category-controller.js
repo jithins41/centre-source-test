@@ -1,6 +1,8 @@
 const categoryHelpers = require("../helpers/category-helpers")
 
 module.exports.loadCategories = async (req, res, next) => {
+    req.session.category = null;
+    req.session.subcategory = null;
     let categories = await categoryHelpers.getCategories();
     res.render('category', { categories });
 }

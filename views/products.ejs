@@ -7,16 +7,14 @@
         <thead>
           <tr>
             <th>Id</th>
-            <th>name</th>
-            <th>Option</th>
+            <th>Product</th>
           </tr>
         </thead>
         <tbody>
-          <% categories.forEach(element => { %>
+          <% products.forEach(element => { %>
           <tr>
-            <td><%= element.catid %></td>
-            <td><%= element.name %></td>
-            <td><a href="/subcategory?category=<%= element.name %>">View subcategories</a></td>
+            <td><%= element.prodid %></td>
+            <td><%= element.prodname %></td>
           </tr>
           <% }) %>
         </tbody>
