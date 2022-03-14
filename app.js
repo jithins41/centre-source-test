@@ -4,6 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { mySqlObject, createConnection, createDatabase } = require('./config/connection');
+const session = require('express-session');
+const indexRouter = require('./routes/index')
+const categoryRouter = require('./routes/categories')
+const subCaregoryRouter = require('./routes/subcategories')
+const productRouter = require('./routes/products');
+const { SESSION_SECRET, SESSION_TIMEOUT } = require('./config/constants');
+
+
 
 
 
@@ -18,6 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: SESSION_SECRET, cookie: { maxAge: SESSION_TIMEOUT } }))
+
+
+app.use('/', indexRouter);
+app.use('/category', categoryRouter);
+app.use('/subcategory', subCaregoryRouter);
+app.use('/products', productRouter);
+
+
 
 createDatabase().then(() => {
   console.log('Connected to mysql')

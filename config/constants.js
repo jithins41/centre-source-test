@@ -1,4 +1,6 @@
 module.exports = {
+    SESSION_SECRET: 'TEST',
+    SESSION_TIMEOUT: 1 * 60 * 60 * 1000,
     MYSQL_CONNECTION_PARAMS: {
         host: 'localhost',
         user: 'root',
