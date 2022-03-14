@@ -1,6 +1,6 @@
 const { select, update, insert } = require('../config/connection');
 const { CATEGORY_TABLE, SUBCATEGORY_TABLE, PRODUCT_TABLE } = require('../config/constants');
-
+const Promise = require('Promise');
 module.exports = {
     getProducts: (subcategory, category) => {
         return new Promise((resolve, reject) => {

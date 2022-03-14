@@ -1,6 +1,6 @@
 const { select, insert } = require("../config/connection");
 const { SUBCATEGORY_TABLE, CATEGORY_TABLE } = require("../config/constants");
-
+const Promise = require('Promise');
 module.exports = {
     getSubCategories: (catname) => {
         return new Promise((resolve, reject) => {
